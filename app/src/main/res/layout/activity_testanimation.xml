@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.shenyonghe.millionanimations.MainActivity">
+    tools:context="com.example.shenyonghe.millionanimations.TestAnimationActivity">
 
 
     <FrameLayout
@@ -20,7 +20,7 @@
             android:layout_gravity="center"
             android:textSize="15sp"
             app:circSolidColor="#fff"
-            app:textColor="#000" />
+            app:downtextColor="#000" />
 
         <ImageView
             android:id="@+id/iv_clock"

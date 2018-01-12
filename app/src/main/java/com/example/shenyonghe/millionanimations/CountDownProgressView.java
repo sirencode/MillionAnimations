@@ -147,12 +147,12 @@ public class CountDownProgressView extends TextView {
             }
 
             //TODO 文字颜色属性
-            if (typedArray.hasValue(R.styleable.CountDownProgress_textColor)) {
+            if (typedArray.hasValue(R.styleable.CountDownProgress_downtextColor)) {
                 //有这个属性索引 获取用户设置的颜色
-                textColor = typedArray.getColor(R.styleable.CountDownProgress_textColor, 0);
+                textColor = typedArray.getColor(R.styleable.CountDownProgress_downtextColor, 0);
             } else {
                 //没有这个属性索引 默认是白色
-                textColor = typedArray.getColor(R.styleable.CountDownProgress_textColor, Color.parseColor("#ffffff"));
+                textColor = typedArray.getColor(R.styleable.CountDownProgress_downtextColor, Color.parseColor("#ffffff"));
             }
 
             //TODO 进度条颜色属性
@@ -161,7 +161,7 @@ public class CountDownProgressView extends TextView {
                 progressColor = typedArray.getColor(R.styleable.CountDownProgress_progressColor, 0);
             } else {
                 //没有这个属性索引 默认是蓝色
-                progressColor = typedArray.getColor(R.styleable.CountDownProgress_progressColor, Color.parseColor("#cccccc"));
+                progressColor = typedArray.getColor(R.styleable.CountDownProgress_progressColor, Color.parseColor("#45b4ff"));
             }
 
             /**
@@ -223,8 +223,14 @@ public class CountDownProgressView extends TextView {
         //TODO 画实心圆
         mPaint.setAntiAlias(true); //设置抗锯齿
         mPaint.setStyle(Paint.Style.FILL); //实心填充style
+        mPaint.setColor(Color.WHITE);
+        canvas.drawCircle(mBounds.centerX(), mBounds.centerY(), circRadius - circFrameWidth, mPaint);
+
+        //TODO 画实心圆
+        mPaint.setAntiAlias(true); //设置抗锯齿
+        mPaint.setStyle(Paint.Style.FILL); //实心填充style
         mPaint.setColor(circSolidColor);
-        canvas.drawCircle(mBounds.centerX(), mBounds.centerY(), circRadius, mPaint);
+        canvas.drawCircle(mBounds.centerX(), mBounds.centerY(), circRadius - circFrameWidth - 2 * progressWidth, mPaint);
 
 
         //TODO 画外边框(空心圆,即园边框)
@@ -234,26 +240,29 @@ public class CountDownProgressView extends TextView {
         mPaint.setColor(circFrameColor);
         canvas.drawCircle(mBounds.centerX(), mBounds.centerY(), circRadius - circFrameWidth, mPaint);
 
-        //TODO 画文字
-        Paint text_paint = getPaint(); //注意：如果是继承的view，这里是没有这个getPaint()方法的。大家可以看到它是Textview包下的方法
-        text_paint.setColor(textColor);
-        text_paint.setAntiAlias(true);
-        text_paint.setTextAlign(Paint.Align.CENTER);
-        float textY = mCenterY - (text_paint.descent() + text_paint.ascent()) / 2;
-        text_paint.setTextSize(dip2px(getContext(),16) + dip2px(getContext(),8) * (progress % 12 - 6) / 12);
-        if (progress == 0  || progress == COUNT){
-            text_paint.setTextSize(dip2px(getContext(),16));
+        if (progress != 0 && progress < 120 - 12) {
+            //TODO 画文字
+            Paint text_paint = getPaint(); //注意：如果是继承的view，这里是没有这个getPaint()方法的。大家可以看到它是Textview包下的方法
+            text_paint.setColor(textColor);
+            text_paint.setAntiAlias(true);
+            text_paint.setTextAlign(Paint.Align.CENTER);
+            float textY = mCenterY - (text_paint.descent() + text_paint.ascent()) / 2;
+            text_paint.setTextSize(dip2px(getContext(), 24) + dip2px(getContext(), 12) * (progress % 12 - 6) / 12);
+            if (progress == COUNT) {
+                text_paint.setTextSize(dip2px(getContext(), 16));
+            }
+            canvas.drawText(String.valueOf(mText - progress / 12), mCenterX, textY, text_paint);
         }
-        canvas.drawText(String.valueOf(mText - progress / 12), mCenterX, textY, text_paint);
 
-
-        //TODO 画进度条
-        mPaint.setColor(progress / 12 >= 7 ? Color.RED : progressColor);
-        mPaint.setStyle(Paint.Style.STROKE);
-        mPaint.setStrokeWidth(progressWidth);
-        mPaint.setStrokeCap(Paint.Cap.ROUND);  //当画笔样式为STROKE或FILL_OR_STROKE时，设置笔刷的图形样式，如圆形样式  Cap.ROUND,或方形样式Cap.SQUARE
-        mArcRectF.set(mBounds.left + progressWidth, mBounds.top + progressWidth, mBounds.right - progressWidth, mBounds.bottom - progressWidth);
-        canvas.drawArc(mArcRectF, -90, 360 * progress / COUNT, false, mPaint); //这里的-90.是方向，大家可以改成0，90，180，-90等就可以看到效果区别
+        if (progress < 120 - 12) {
+            //TODO 画进度条
+            mPaint.setColor(progress / 12 >= 7 ? Color.RED : progressColor);
+            mPaint.setStyle(Paint.Style.STROKE);
+            mPaint.setStrokeWidth(progressWidth);
+            mPaint.setStrokeCap(Paint.Cap.ROUND);  //当画笔样式为STROKE或FILL_OR_STROKE时，设置笔刷的图形样式，如圆形样式  Cap.ROUND,或方形样式Cap.SQUARE
+            mArcRectF.set(mBounds.left + progressWidth, mBounds.top + progressWidth, mBounds.right - progressWidth, mBounds.bottom - progressWidth);
+            canvas.drawArc(mArcRectF, -90, 360 * progress / COUNT, false, mPaint); //这里的-90.是方向，大家可以改成0，90，180，-90等就可以看到效果区别
+        }
     }
 
     public static int dip2px(Context context, float dpValue) {

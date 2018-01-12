@@ -12,7 +12,7 @@ import android.view.animation.AccelerateDecelerateInterpolator;
 import android.view.animation.LinearInterpolator;
 import android.widget.ImageView;
 
-public class MainActivity extends Activity {
+public class TestAnimationActivity extends Activity {
     CountDownProgressView countDownView;
     private ImageView fh;
     private ImageView clock;
@@ -24,7 +24,7 @@ public class MainActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_testanimation);
         countDownView = findViewById(R.id.countdownProgressView);
         fh = findViewById(R.id.iv_fuhuo);
         clock = findViewById(R.id.iv_clock);
