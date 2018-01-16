@@ -35,7 +35,7 @@ public class CountDownProgressView extends TextView {
     private int progressColor;
 
     //TODO 进度条的宽度
-    private int progressWidth = 10;
+    private int progressWidth = 5;
 
     //TODO 文字的颜色
     private int textColor;
@@ -240,7 +240,7 @@ public class CountDownProgressView extends TextView {
         mPaint.setColor(circFrameColor);
         canvas.drawCircle(mBounds.centerX(), mBounds.centerY(), circRadius - circFrameWidth, mPaint);
 
-        if (progress != 0 && progress < 120 - 12) {
+        if (progress != 0 && progress < 120 ) {
             //TODO 画文字
             Paint text_paint = getPaint(); //注意：如果是继承的view，这里是没有这个getPaint()方法的。大家可以看到它是Textview包下的方法
             text_paint.setColor(textColor);
@@ -254,7 +254,7 @@ public class CountDownProgressView extends TextView {
             canvas.drawText(String.valueOf(mText - progress / 12), mCenterX, textY, text_paint);
         }
 
-        if (progress < 120 - 12) {
+        if (progress < 120 ) {
             //TODO 画进度条
             mPaint.setColor(progress / 12 >= 7 ? Color.RED : progressColor);
             mPaint.setStyle(Paint.Style.STROKE);

@@ -39,7 +39,7 @@ public class TestAnimationActivity extends Activity {
         });
 
         countDownView.setProgressListener(progress -> {
-            if (progress == 120 - 12) {
+            if (progress == 120) {
                 countDownView.setVisibility(View.GONE);
                 clock.setVisibility(View.VISIBLE);
                 clock.setBackgroundResource(R.drawable.clock_animation);

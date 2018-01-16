@@ -19,7 +19,7 @@
             android:layout_height="50dp"
             android:layout_gravity="center"
             android:textSize="15sp"
-            app:circSolidColor="#fff"
+            app:circSolidColor="#ccc"
             app:downtextColor="#000" />
 
         <ImageView
